@@ -32,6 +32,9 @@ public static class AirQualityAlexa
 
     private static async Task<SkillResponse> Handle(SkillRequest request)
     {
+        if (request.Request is SessionEndedRequest)
+            return ResponseBuilder.Empty();
+
         if (!(request.Request is IntentRequest intentRequest))
             return ResponseBuilder.Tell("I'm sorry - I didn't understand your request");
 
