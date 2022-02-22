@@ -15,12 +15,15 @@ namespace AirQualityBot.SkillEndpoint;
 public static class AirQualityAlexa
 {
     private static IAirQualityService airQualityService = new AirQualityRestService(Environment.GetEnvironmentVariable("AQICN_API_TOKEN"));
+    private static ILogger logger;
 
     [FunctionName("AirQualityAlexa")]
     public static async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
         ILogger log)
     {
+        AirQualityAlexa.logger = log;
+
         SkillRequest skillRequest;
         using (var sr = new StreamReader(req.Body))
             skillRequest = JsonConvert.DeserializeObject<SkillRequest>(await sr.ReadToEndAsync());
@@ -56,6 +59,7 @@ public static class AirQualityAlexa
             return ResponseBuilder.Tell("I didn't hear you say a city");
 
         var aqin = await airQualityService.GetAirQualityForCityAsync(location.Value);
+        logger.LogInformation("Asked about air quality in {0}, was {1}", location.Value, aqin);
 
         return ResponseBuilder.Tell($"Air quality index in {location.Value} is currently {aqin.AirQualityIndex}");
     }
@@ -65,8 +69,8 @@ public static class AirQualityAlexa
         if (location == null || location.LocationServices.Access == LocationServiceAccess.Disabled)
             return ResponseBuilder.Tell("Error - device location could not be retrieved");
 
-        var aqin = await airQualityService.GetAirQualityForLocation(location.Coordinate.Latitude,
-            location.Coordinate.Longitude);
+        var aqin = await airQualityService.GetAirQualityForLocation(location.Coordinate.Latitude, location.Coordinate.Longitude);
+        logger.LogInformation("Asked about air quality in {0}, {1}, was {2}", location.Coordinate.Latitude, location.Coordinate.Longitude, aqin);
 
         return ResponseBuilder.Tell($"Air quality index in {aqin.City.Name} is currently {aqin.AirQualityIndex}");
     }

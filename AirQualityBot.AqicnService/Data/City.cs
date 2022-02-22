@@ -1,16 +1,12 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace AirQualityBot.AqicnService.Data
+namespace AirQualityBot.AqicnService.Data;
+
+public record City
 {
-    public class City
-    {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
-        [JsonProperty("url")]
-        public Uri Url { get; internal set; }
-        //[JsonProperty("geo")]
-        //public Point Geo { get; internal set; }
+    [JsonProperty("name")]
+    public string Name { get; init; }
 
-    }
+    [JsonProperty("url")]
+    public Uri Url { get; init; }
 }

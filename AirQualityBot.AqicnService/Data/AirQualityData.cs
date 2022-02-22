@@ -1,33 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace AirQualityBot.AqicnService.Data
+namespace AirQualityBot.AqicnService.Data;
+
+public record AirQualityData
 {
-    public class AirQualityData
-    {
-        [JsonProperty("idx")]
-        public int StationId { get; internal set; }
+    [JsonProperty("idx")]
+    public int StationId { get; init; }
 
-        [JsonProperty("aqi")]
-        public int AirQualityIndex { get; internal set; }
+    [JsonProperty("aqi")]
+    public int AirQualityIndex { get; init; }
 
-        [JsonProperty("attributions")]
-        public List<Attribution> Attributions { get; internal set; }
+    [JsonProperty("attributions")]
+    public List<Attribution> Attributions { get; init; }
 
-        [JsonProperty("dominentpol")]
-        public string DominentPolutant { get; internal set; }
+    [JsonProperty("dominentpol")]
+    public string DominentPolutant { get; init; }
 
-        [JsonProperty("city")]
-        public City City { get; internal set; }
-    }
+    [JsonProperty("city")]
+    public City City { get; init; }
+}
 
-    public class Attribution
-    {
-        [JsonProperty("url")]
-        public Uri Url { get; internal set; }
+public record Attribution
+{
+    [JsonProperty("url")]
+    public Uri Url { get; init; }
 
-        [JsonProperty("name")]
-        public Uri Name { get; internal set; }
-    }
+    [JsonProperty("name")]
+    public Uri Name { get; init; }
 }

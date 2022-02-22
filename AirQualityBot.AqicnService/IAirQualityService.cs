@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using AirQualityBot.AqicnService.Data;
+﻿using AirQualityBot.AqicnService.Data;
 
-namespace AirQualityBot.AqicnService
+namespace AirQualityBot.AqicnService;
+
+public interface IAirQualityService
 {
-    public interface IAirQualityService
-    {
-        Task<AirQualityData> GetAirQualityForCityAsync(string cityName);
-        Task<AirQualityData> GetAirQualityForLocation(double latitude, double longitude);
-    }
+    Task<AirQualityData> GetAirQualityForCityAsync(string cityName);
+    Task<AirQualityData> GetAirQualityForLocation(double latitude, double longitude);
 }
