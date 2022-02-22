@@ -1,4 +1,4 @@
-name: .NET Core
+name: ci
 
 on: [push]
 
@@ -17,6 +17,6 @@ jobs:
       with:
         dotnet-version: '6.0.x'
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build
     - name: Test
       run: dotnet test
